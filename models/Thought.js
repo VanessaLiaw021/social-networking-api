@@ -1,42 +1,6 @@
 //Import required packages
 const { Schema, model, Types } = require("mongoose");
 
-//Schema for Thought Model 
-const thoughtSchema = new Schema(
-    {
-        //Schema for thought text
-        thoughtText: {
-            type: String, 
-            required: true, 
-            minLength: 1, 
-            maxLength: 280
-        },
-
-        //Scehema for created at 
-        createdAt: {
-            type: Date, 
-            default: Date.now, 
-            get: (time) => format_date(time)
-        },
-
-        //Schema for username 
-        username: {
-            type: String,
-            required: true
-        },
-
-        //Schema for reactions 
-        reactions: [reactionSchema]
-    },
-    {
-        toJSON: {
-            virtuals: true
-        },
-
-        id: false
-    }
-);
-
 //Schema for the reaction model
 const reactionSchema = new Schema(
     {
@@ -63,13 +27,55 @@ const reactionSchema = new Schema(
         createdAt: {
             type: Date, 
             default: Date.now, 
-            get: (time) => format_date(time)
+            get: (time) => {
+                var date = new Date(time);
+                date.toDateString();
+            }
         }
     },
     {
         toJSON: {
             getters: true
         }, 
+
+        id: false
+    }
+);
+
+//Schema for Thought Model 
+const thoughtSchema = new Schema(
+    {
+        //Schema for thought text
+        thoughtText: {
+            type: String, 
+            required: true, 
+            minLength: 1, 
+            maxLength: 280
+        },
+
+        //Scehema for created at 
+        createdAt: {
+            type: Date, 
+            default: Date.now, 
+            get: (time) => {
+                var date = new Date(time);
+                date.toDateString();
+            }
+        },
+
+        //Schema for username 
+        username: {
+            type: String,
+            required: true
+        },
+
+        //Schema for reactions 
+        reactions: [reactionSchema]
+    },
+    {
+        toJSON: {
+            virtuals: true
+        },
 
         id: false
     }
