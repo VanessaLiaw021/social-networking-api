@@ -31,21 +31,36 @@ module.exports = {
     //Function that update a user 
     updateUser(req, res) {
         User.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true, runValidators: true })
-            .then(update => res.json(update))
+            .then(userUpdate => res.json(userUpdate))
             .catch(err => res.status(500).json(err))
     },
     
     //Function that delete a user 
     deleteUser(req, res) {
         User.findOneAndDelete({ _id: req.params.id })
-            .then(delete => res.json(delete))
+            .then(userDelete => res.json(userDelete))
             .catch(err => res.status(500).json(err))
     },
 
     //Function that add a friend 
     addFriend(req, res) {
-        User.findOneAndUpdate({ _id: req.params.id }, { $push: { friends: req.params.friendId }}, { new: true })
-            .then(friend => res.json(friend))
-            .catch(err => res.status(500).json(err))
+        User.findOneAndUpdate(
+
+            { _id: req.params.id }, 
+            { $push: { friends: req.params.friendId }}, 
+            { new: true, runValidators: true }
+
+        ).then(friendAdd => res.json(friendAdd)).catch(err => res.status(500).json(err))
     },
+
+    //Function that remove a friend 
+    removeFriend(req, res) {
+        User.findOneAndUpdate(
+
+            { _id: req.params.id },
+            { $pull: { friends: req.params.friendId }},
+            { new: true }
+
+        ).then(friendRemove => res.json(friendRemove)).catch(err => res.status(500).json(err))
+    }
 };
