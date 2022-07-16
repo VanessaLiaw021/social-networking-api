@@ -1,6 +1,5 @@
 //Import required packages
-const { Schema, model } = require("mongoose");
-const reactionSchema = require("./Reaction");
+const { Schema, model, Types } = require("mongoose");
 
 //Schema for Thought Model 
 const thoughtSchema = new Schema(
@@ -33,6 +32,44 @@ const thoughtSchema = new Schema(
         toJSON: {
             virtuals: true
         },
+
+        id: false
+    }
+);
+
+//Schema for the reaction model
+const reactionSchema = new Schema(
+    {
+        //Schema for reaction id
+        reactionId: {
+            type: Schema.Types.ObjectId, 
+            default: () => new Types.ObjectId()
+        },
+
+        //Schema for reaction body 
+        reactionBody: {
+            type: String, 
+            required: true, 
+            maxLength: 200
+        },
+
+        //Schema for username 
+        username: {
+            type: String, 
+            required: true
+        },
+
+        //Schema for created at 
+        createdAt: {
+            type: Date, 
+            default: Date.now, 
+            get: (time) => format_date(time)
+        }
+    },
+    {
+        toJSON: {
+            getters: true
+        }, 
 
         id: false
     }
