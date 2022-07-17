@@ -35,7 +35,7 @@ module.exports = {
 
         //Create a thought 
         Thought.create(req.body)
-            .then(thought => User.findOneAndUpdate({ _id: req.params.id }, { $push: { thoughts: thought._id }}, { new: true }))
+            .then(thought => User.findOneAndUpdate({ username: req.body.username }, { $push: { thoughts: thought._id }}, { new: true }))
             .then(thoughtCreate => res.json(thoughtCreate))
             .catch(err => res.status(500).json(err))
     },
