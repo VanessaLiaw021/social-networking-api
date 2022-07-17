@@ -8,6 +8,7 @@ module.exports = {
     getAllUsers(req, res) {
         User.find()
             .populate({ path: "thoughts", select: "-__v "})
+            .populate({ path: "friends", select: "-__v"})
             .select("-__v")
             .then(allUser => res.json(allUser))
             .catch(err => res.status(500).json(err))
