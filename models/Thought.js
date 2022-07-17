@@ -32,7 +32,8 @@ const reactionSchema = new Schema(
         }
     },
     {
-        toJSON: { getters: true }, 
+         //Display the virtual field on client side
+        toJSON: { virutals: true }, 
         id: false
     }
 );
@@ -65,6 +66,7 @@ const thoughtSchema = new Schema(
         reactions: [reactionSchema]
     },
     {
+        //Display the virtual field on client side
         toJSON: { virtuals: true },
         id: false
     }
