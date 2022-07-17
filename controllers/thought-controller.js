@@ -28,7 +28,14 @@ module.exports = {
     },
 
     //Function to create a thought 
+    createThought(req, res) {
 
+        //Create a thought 
+        Thought.create(req.body)
+            .then({_id} => User.findOneAndUpdate({ _id: req.params.id }, {$push: { thoughts: _id }}, { new: true }))
+            .then(thoughtCreate => res.json(thoughtCreate))
+            .catch(err => res.status(500).json(err))
+    },
 
     //Function to update a thought 
 
