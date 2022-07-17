@@ -9,7 +9,7 @@ module.exports = {
 
         //Find all thought
         Thought.find()
-            .populate({ path: "reactions", select: "-__v"})
+            .populate({ path: "reactions" })
             .select("-__v")
             .then(allThoughts => res.json(allThoughts))
             .catch(err => res.status(500).json(err))
@@ -20,10 +20,14 @@ module.exports = {
 
         //Find a single thought 
         Thought.findOne({ _id: req.params.id })
-            .populate({ path: "reactions", select: "-__v"})
+            .populate({ path: "reactions" })
             .select("-__v")
-            .then(singleThought => res.json(singleThought))
-            .catch(err => res.status(500).json(err))
+            .then(singleThought => 
+
+                //Check to see if id exist, then get that specific thought
+                !singleThought ? res.status(400).json({ message: "No thought exist with ID" }): res.json(singleThought)
+
+            ).catch(err => res.status(500).json(err))
     },
 
     //Function to create a thought 
@@ -41,8 +45,12 @@ module.exports = {
 
         //Update a thought 
         Thought.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true, runValidators: true })
-            .then(thoughtUpdate => res.json(thoughtUpdate))
-            .catch(err => res.status(500).json(err))
+            .then(thoughtUpdate => 
+
+                //Check to see if id exist, then update thought
+                !thoughtUpdate ? res.status(400).json({ message: "No thought exist with ID" }): res.json(thoughtUpdate)
+
+            ).catch(err => res.status(500).json(err))
     },
 
     //Function to delete a thought
@@ -50,8 +58,12 @@ module.exports = {
 
         //Delete a thought 
         Thought.findOneAndDelete({ _id: req.params.id })
-            .then(thoughtDelete => res.json(thoughtDelete))
-            .catch(err => res.status(500).json(err))
+            .then(thoughtDelete => 
+
+                //Check to see if id exist, then delete the thought
+                !thoughtDelete ? res.status(400).json({ message: "No thought exist with ID" }): res.json(thoughtDelete)
+
+            ).catch(err => res.status(500).json(err))
     },
 
     //Function to add a reaction 
@@ -77,6 +89,11 @@ module.exports = {
             { $pull: { reactions: { _id: req.params.reactionId}}}, 
             { new: true }
 
-        ).then(reactionDelete => res.json(reactionDelete)).catch(err => res.status(500).json(err))
+        ).then(reactionDelete => 
+            
+            //Check to see if id exist, then remove reaction
+            !reactionDelete ? res.status(400).json({ message: "No thought exist with ID" }) : res.json(reactionDelete)
+        
+        ).catch(err => res.status(500).json(err))
     }
 };

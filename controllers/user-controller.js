@@ -9,8 +9,8 @@ module.exports = {
 
         //Find all users
         User.find()
-            .populate({ path: "thoughts", select: "-__v" })
-            .populate({ path: "friends", select: "-__v" })
+            .populate({ path: "thoughts" })
+            .populate({ path: "friends" })
             .select("-__v")
             .then(allUser => res.json(allUser))
             .catch(err => res.status(500).json(err))
@@ -21,11 +21,15 @@ module.exports = {
 
         //Find one user
         User.findOne({ _id: req.params.id })
-            .populate({ path: "thoughts", select: "-__v" })
-            .populate({ path: "friends", select: "-__v" })
+            .populate({ path: "thoughts" })
+            .populate({ path: "friends" })
             .select("-__v")
-            .then(user => res.json(user))
-            .catch(err => res.status(500).json(err))
+            .then(user => 
+                
+                //Check to see if id exist, then get that specific user by id
+                !user ? res.status(400).json({ message: "No user exist with the ID "}) : res.json(user)
+
+            ).catch(err => res.status(500).json(err))
     },
 
     //Function that add a new user 
@@ -33,8 +37,7 @@ module.exports = {
 
         //Create a user
         User.create({ username: req.body.username, email: req.body.email })
-            .then(addUser => res.json(addUser))
-            .catch(err => res.status(500).json(err))
+            .then(addUser => res.json(addUser)).catch(err => res.status(500).json(err))
     },
 
     //Function that update a user 
@@ -42,8 +45,12 @@ module.exports = {
 
         //Update a user
         User.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true, runValidators: true })
-            .then(userUpdate => res.json(userUpdate))
-            .catch(err => res.status(500).json(err))
+            .then(userUpdate => 
+                
+                //Check to see if id exist, then update user
+                !userUpdate ? res.status(400).json({ message: "No user exist with ID" }) : res.json(userUpdate)
+
+            ).catch(err => res.status(500).json(err))
     },
     
     //Function that delete a user 
@@ -51,8 +58,12 @@ module.exports = {
         
         //Delete a user
         User.findOneAndDelete({ _id: req.params.id })
-            .then(userDelete => res.json(userDelete))
-            .catch(err => res.status(500).json(err))
+            .then(userDelete => 
+
+                //Check to see if id exist, then delete the user
+                !userDelete ? res.status(400).json({ message: "No user exist with ID" }): res.json(userDelete)
+
+            ).catch(err => res.status(500).json(err))
     },
 
     //Function that add a friend 
@@ -78,6 +89,11 @@ module.exports = {
             { $pull: { friends: req.params.friendId }},
             { new: true }
 
-        ).then(friendRemove => res.json(friendRemove)).catch(err => res.status(500).json(err))
+        ).then(friendRemove => 
+
+            //Check to see if id exist, then remove friend
+            !friendRemove ? res.status(400).json({ message: "No user exist with ID" }): res.json(friendRemove)
+
+        ).catch(err => res.status(500).json(err))
     }
 };
