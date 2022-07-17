@@ -1,5 +1,5 @@
 //Import model 
-const { User, Thought } = require("../models");
+const { User } = require("../models");
 
 //Export the following functions 
 module.exports = {
@@ -70,6 +70,7 @@ module.exports = {
         //Add friend
         User.findOneAndUpdate(
 
+            //Add friend with using user id 
             { _id: req.params.userId }, 
             { $push: { friends: req.params.friendId }}, 
             { new: true, runValidators: true }
@@ -83,6 +84,7 @@ module.exports = {
         //Remove friend
         User.findOneAndUpdate(
 
+            //Remove friend with using user id
             { _id: req.params.userId },
             { $pull: { friends: req.params.friendId }},
             { new: true }

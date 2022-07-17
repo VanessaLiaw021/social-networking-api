@@ -8,9 +8,12 @@ module.exports = {
     getAllThoughts(req, res) {
 
         //Find all thought
-        Thought.find()
+        Thought.find()  
+
+            //Display the actual reaction by user instead of id
             .populate({ path: "reactions" })
-            .select("-__v")
+
+            //Return data as json and if any error display it
             .then(allThoughts => res.json(allThoughts))
             .catch(err => res.status(500).json(err))
     },
@@ -20,8 +23,12 @@ module.exports = {
 
         //Find a single thought 
         Thought.findOne({ _id: req.params.id })
+
+            //Display the actual reaction by user instead of id
             .populate({ path: "reactions" })
             .select("-__v")
+
+            //Return data as json and if any error display it
             .then(singleThought => 
 
                 //Check to see if id exist, then get that specific thought
@@ -35,7 +42,11 @@ module.exports = {
 
         //Create a thought 
         Thought.create(req.body)
+
+            //Push the thought created that is associated with the user's username
             .then(thought => User.findOneAndUpdate({ username: req.body.username }, { $push: { thoughts: thought._id }}, { new: true }))
+
+            //Return data as json and if any error display it 
             .then(thoughtCreate => res.json(thoughtCreate))
             .catch(err => res.status(500).json(err))
     },
@@ -45,6 +56,8 @@ module.exports = {
 
         //Update a thought 
         Thought.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true, runValidators: true })
+
+            //Return data as json and if any error display it
             .then(thoughtUpdate => 
 
                 //Check to see if id exist, then update thought
@@ -58,6 +71,8 @@ module.exports = {
 
         //Delete a thought 
         Thought.findOneAndDelete({ _id: req.params.id })
+
+            //Return data as json and if any error display it
             .then(thoughtDelete => 
 
                 //Check to see if id exist, then delete the thought
@@ -72,10 +87,16 @@ module.exports = {
         //Add a reaction 
         Thought.findOneAndUpdate(
 
-            { _id: req.params.thoughtId }, 
-            { $push: { reactions: { reactionBody: req.body.reactionBody, username: req.body.username}}}, 
+            //Add reaction with using thought id
+            { _id: req.params.thoughtId },
+            
+            //Push the reaction created that is associated to the username
+            { $push: { reactions: { reactionBody: req.body.reactionBody, username: req.body.username }}},
+            
+            //Set new to true
             { new: true }
 
+        //Return data as json and if any error display it
         ).then(reactionAdd => res.json(reactionAdd)).catch(err => res.status(500).json(err))
     },
 
@@ -85,10 +106,16 @@ module.exports = {
         //Remove a reaction 
         Thought.findOneAndUpdate(
             
+            //Remove reaction with using thought id 
             { _id: req.params.thoughtId }, 
+
+            //Pull the reaction deleted that is associated with that reaction id
             { $pull: { reactions: { _id: req.params.reactionId }}}, 
+
+            //Set new to true
             { new: true }
 
+        //Return data as json and if any error display it
         ).then(reactionDelete => 
             
             //Check to see if id exist, then remove reaction
