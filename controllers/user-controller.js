@@ -20,7 +20,7 @@ module.exports = {
     getSingleUser(req, res) {
 
         //Find one user
-        User.findOne({ _id: req.params.id })
+        User.findOne({ _id: req.params.userId })
             .populate({ path: "thoughts" })
             .populate({ path: "friends" })
             .select("-__v")
@@ -44,7 +44,7 @@ module.exports = {
     updateUser(req, res) {
 
         //Update a user
-        User.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true, runValidators: true })
+        User.findOneAndUpdate({ _id: req.params.userId }, req.body, { new: true, runValidators: true })
             .then(userUpdate => 
                 
                 //Check to see if id exist, then update user
@@ -57,7 +57,7 @@ module.exports = {
     deleteUser(req, res) {
         
         //Delete a user
-        User.findOneAndDelete({ _id: req.params.id })
+        User.findOneAndDelete({ _id: req.params.userId })
             .then(userDelete => 
 
                 //Check to see if id exist, then delete the user
