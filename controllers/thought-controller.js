@@ -32,14 +32,26 @@ module.exports = {
 
         //Create a thought 
         Thought.create(req.body)
-            .then({_id} => User.findOneAndUpdate({ _id: req.params.id }, {$push: { thoughts: _id }}, { new: true }))
+            .then({_id} => User.findOneAndUpdate({ _id: req.params.id }, { $push: { thoughts: _id }}, { new: true }))
             .then(thoughtCreate => res.json(thoughtCreate))
             .catch(err => res.status(500).json(err))
     },
 
     //Function to update a thought 
+    updateThought(req, res) {
 
+        //Update a thought 
+        Thought.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true, runValidators: true })
+            .then(thoughtUpdate => res.json(thoughtUpdate))
+            .catch(err => res.status(500).json(err))
+    },
 
     //Function to delete a thought
+    deleteThought(req, res) {
 
+        //Delete a thought 
+        Thought.findOneAndDelete({ _id: req.params.id })
+            .then(thoughtDelete => res.json(thoughtDelete))
+            .catch(err => res.status(500).json(err))
+    }
 };
