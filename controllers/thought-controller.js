@@ -10,7 +10,7 @@ module.exports = {
         //Find all thought
         Thought.find()  
 
-            //Display the actual reaction by user instead of id
+            //Display the actual reaction content by user instead of id
             .populate({ path: "reactions" })
 
             //Return data as json and if any error display it
@@ -24,7 +24,7 @@ module.exports = {
         //Find a single thought 
         Thought.findOne({ _id: req.params.id })
 
-            //Display the actual reaction by user instead of id
+            //Display the actual reaction content by user instead of id
             .populate({ path: "reactions" })
             .select("-__v")
 

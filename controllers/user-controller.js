@@ -9,8 +9,12 @@ module.exports = {
 
         //Find all users
         User.find()
+
+            //Display the actual thought content by user instead of id 
             .populate({ path: "thoughts" })
             .select("-__v")
+
+            //Return data as json and if any error display it
             .then(allUser => res.json(allUser))
             .catch(err => res.status(500).json(err))
     },
@@ -20,9 +24,15 @@ module.exports = {
 
         //Find one user
         User.findOne({ _id: req.params.id })
+
+            //Display the actual thought content by user instead of id
             .populate({ path: "thoughts" })
+
+            //Display the actual friend content by user instead of id
             .populate({ path: "friends" })
             .select("-__v")
+
+            //Return data as json and if any error display it
             .then(user => 
                 
                 //Check to see if id exist, then get that specific user by id
@@ -35,7 +45,10 @@ module.exports = {
     createUser(req, res) {
 
         //Create a user
-        User.create(req.body).then(addUser => res.json(addUser)).catch(err => res.status(500).json(err))
+        User.create(req.body)
+        
+            //Return data as json if any error display it
+            .then(addUser => res.json(addUser)).catch(err => res.status(500).json(err))
     },
 
     //Function that update a user 
@@ -43,6 +56,8 @@ module.exports = {
 
         //Update a user
         User.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true, runValidators: true })
+
+            //Return data as json if any error display it
             .then(userUpdate => 
                 
                 //Check to see if id exist, then update user
@@ -56,6 +71,8 @@ module.exports = {
         
         //Delete a user
         User.findOneAndDelete({ _id: req.params.id })
+
+            //Return data as json if any error display it
             .then(userDelete => 
 
                 //Check to see if id exist, then delete the user
@@ -72,9 +89,14 @@ module.exports = {
 
             //Add friend with using user id 
             { _id: req.params.userId }, 
+
+            //Push the friends created that is associated to the username
             { $push: { friends: req.params.friendId }}, 
+
+            //Set new to true and runValidators 
             { new: true, runValidators: true }
 
+        //Return data as json and if any error display it
         ).then(friendAdd => res.json(friendAdd)).catch(err => res.status(500).json(err))
     },
 
@@ -86,9 +108,14 @@ module.exports = {
 
             //Remove friend with using user id
             { _id: req.params.userId },
+
+            //Pull the friends deleted that is associated to the username 
             { $pull: { friends: req.params.friendId }},
+
+            //Set new to true
             { new: true }
 
+        //Return data as json and if any error display it
         ).then(friendRemove => 
 
             //Check to see if id exist, then remove friend
