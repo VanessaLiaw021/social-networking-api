@@ -59,7 +59,7 @@ module.exports = {
 
         //Add a reaction 
         Thought.findOneAndUpdate(
-            { _id: req.params.id }, 
+            { _id: req.params.thoughtId }, 
             { $push: { reactions: { reactionBody: req.body.reactionBody, username: req.body.username}}}, 
             { new: true }
 
@@ -70,8 +70,12 @@ module.exports = {
     removeReaction(req, res) {
 
         //Remove a reaction 
-        Thought.findOneAndDelete({ _id: req.parama.id })
-            .then(reactionDelete => res.json(reactionDelete))
-            .catch(err => res.status(500).json(err))
+        Thought.findOneAndDelete(
+            
+            { _id: req.parama.thoughtId }, 
+            { $pull: { reactions: { _id: req.params.reactionId}}}, 
+            { new: true }
+
+        ).then(reactionDelete => res.json(reactionDelete)).catch(err => res.status(500).json(err))
     }
 };

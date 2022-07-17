@@ -18,3 +18,6 @@ router.route("/:id").get(getSingleUser).put(updateUser).delete(deleteUser);
 
 //Routes to get add friend and remove friend 
 router.route("/:id/friends/:friendId").post(addFriend).delete(removeFriend);
+
+//Export router 
+module.exports = router;
