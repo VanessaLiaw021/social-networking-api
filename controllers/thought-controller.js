@@ -19,7 +19,7 @@ module.exports = {
     getSingleThought(req, res) {
 
         //Find a single thought 
-        Thought.findOne({ _id: req.params.thoughtId })
+        Thought.findOne({ _id: req.params.id })
             .populate({ path: "reactions" })
             .select("-__v")
             .then(singleThought => 
@@ -44,7 +44,7 @@ module.exports = {
     updateThought(req, res) {
 
         //Update a thought 
-        Thought.findOneAndUpdate({ _id: req.params.thoughtId }, req.body, { new: true, runValidators: true })
+        Thought.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true, runValidators: true })
             .then(thoughtUpdate => 
 
                 //Check to see if id exist, then update thought
@@ -57,7 +57,7 @@ module.exports = {
     deleteThought(req, res) {
 
         //Delete a thought 
-        Thought.findOneAndDelete({ _id: req.params.thoughtId })
+        Thought.findOneAndDelete({ _id: req.params.id })
             .then(thoughtDelete => 
 
                 //Check to see if id exist, then delete the thought
@@ -86,7 +86,7 @@ module.exports = {
         Thought.findOneAndUpdate(
             
             { _id: req.params.thoughtId }, 
-            { $pull: { reactions: { _id: req.params.reactionId}}}, 
+            { $pull: { reactions: { _id: req.params.reactionId }}}, 
             { new: true }
 
         ).then(reactionDelete => 
