@@ -1,5 +1,6 @@
 //Import required packages
 const { Schema, model, Types } = require("mongoose");
+const moment = require("moment");
 
 //Schema for the reaction model
 const reactionSchema = new Schema(
@@ -27,17 +28,13 @@ const reactionSchema = new Schema(
         createdAt: {
             type: Date, 
             default: Date.now, 
-            get: (time) => {
-                var date = new Date(time);
-                date.toDateString();
+            get: (date) => {
+                moment(date).format("MMM DD, YYYY [at] hh:mm a")
             }
         }
     },
     {
-        toJSON: {
-            getters: true
-        }, 
-
+        toJSON: { getters: true }, 
         id: false
     }
 );
@@ -57,9 +54,8 @@ const thoughtSchema = new Schema(
         createdAt: {
             type: Date, 
             default: Date.now, 
-            get: (time) => {
-                var date = new Date(time);
-                date.toDateString();
+            get: (date) => {
+                moment(date).format("MMM DD, YYYY [at] hh:mm a")
             }
         },
 
@@ -73,10 +69,7 @@ const thoughtSchema = new Schema(
         reactions: [reactionSchema]
     },
     {
-        toJSON: {
-            virtuals: true
-        },
-
+        toJSON: { virtuals: true },
         id: false
     }
 );
