@@ -17,8 +17,8 @@ module.exports = {
     //Function that get a single user 
     getSingleUser(req, res) {
         User.findOne({ _id: req.params.id })
-            .populate({ path: "friends", select: "-__v" })
             .populate({ path: "thoughts", select: "-__v" })
+            .populate({ path: "friends", select: "-__v" })
             .select("-__v")
             .then(user => res.json(user))
             .catch(err => res.status(500).json(err))
@@ -49,7 +49,7 @@ module.exports = {
     addFriend(req, res) {
         User.findOneAndUpdate(
 
-            { _id: req.params.id }, 
+            { _id: req.params.userId }, 
             { $push: { friends: req.params.friendId }}, 
             { new: true, runValidators: true }
 
@@ -60,7 +60,7 @@ module.exports = {
     removeFriend(req, res) {
         User.findOneAndUpdate(
 
-            { _id: req.params.id },
+            { _id: req.params.userId },
             { $pull: { friends: req.params.friendId }},
             { new: true }
 
