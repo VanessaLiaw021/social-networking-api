@@ -32,7 +32,7 @@ const reactionSchema = new Schema(
         }
     },
     {
-         //Display the virtual field on client side
+        //Display the virtual field on client side
         toJSON: { virutals: true }, 
         id: false
     }

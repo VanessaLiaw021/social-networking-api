@@ -36,6 +36,7 @@ const userSchema = new Schema (
         }]
     },
     {
+        //Display the virtual field on client side
         toJSON: { virtuals: true },
         id: false
     }
