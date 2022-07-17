@@ -53,5 +53,26 @@ module.exports = {
         Thought.findOneAndDelete({ _id: req.params.id })
             .then(thoughtDelete => res.json(thoughtDelete))
             .catch(err => res.status(500).json(err))
+    },
+
+    //Function to add a reaction 
+    addReaction(req, res) {
+
+        //Add a reaction 
+        Thought.findOneAndUpdate(
+            { _id: req.params.id }, 
+            { $push: { reactions: { reactionBody: req.body.reactionBody, username: req.body.username}}}, 
+            { new: true }
+
+        ).then(reactionAdd => res.json(reactionAdd)).catch(err => res.status(500).json(err))
+    },
+
+    //Function to remove a reaction 
+    removeReaction(req, res) {
+
+        //Remove a reaction 
+        Thought.findOneAndDelete({ _id: req.parama.id })
+            .then(reactionDelete => res.json(reactionDelete))
+            .catch(err => res.status(500).json(err))
     }
 };
