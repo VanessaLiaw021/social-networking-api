@@ -1,7 +1,6 @@
 //Import model 
 const { Thought, User } = require("../models");
 
-
 //Export the following functions 
 module.exports = {
 
@@ -31,8 +30,8 @@ module.exports = {
     createThought(req, res) {
 
         //Create a thought 
-        Thought.create(req.body)
-            .then({_id} => User.findOneAndUpdate({ _id: req.params.id }, { $push: { thoughts: _id }}, { new: true }))
+        Thought.create({ thoughtText: req.body.thoughtText, username: req.body.username })
+            .then(_id => User.findOneAndUpdate({ _id: req.params.id }, { $push: { thoughts: _id }}, { new: true }))
             .then(thoughtCreate => res.json(thoughtCreate))
             .catch(err => res.status(500).json(err))
     },

@@ -25,7 +25,9 @@ module.exports = {
 
     //Function that add a new user 
     createUser(req, res) {
-        User.create(req.body).then(addUser => res.json(addUser)).catch(err => res.status(500).json(err))
+        User.create({ username: req.body.username, email: req.body.email })
+            .then(addUser => res.json(addUser))
+            .catch(err => res.status(500).json(err))
     },
 
     //Function that update a user 
