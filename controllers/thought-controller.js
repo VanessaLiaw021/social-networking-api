@@ -26,7 +26,6 @@ module.exports = {
 
             //Display the actual reaction content by user instead of id
             .populate({ path: "reactions" })
-            .select("-__v")
 
             //Return data as json and if any error display it
             .then(singleThought => 
