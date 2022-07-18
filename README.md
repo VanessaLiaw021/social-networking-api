@@ -37,7 +37,7 @@ npm i express mongoose moment
 
 ## Resources 
 
-- [GitHub Repo]()
+- [GitHub Repo](https://github.com/VanessaLiaw021/social-networking-api)
 
 - [Demo GET all User and GET all Thoughts]()
 
