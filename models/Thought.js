@@ -28,12 +28,15 @@ const reactionSchema = new Schema(
         createdAt: {
             type: Date, 
             default: Date.now, 
-            get: timeCreated => moment(timeCreated).format('MMMM Do YYYY, h:mm a')
+            get: timeStamp => moment(timeStamp).format("MMMM Do YYYY, h:mm:ss a")
         }
     },
     {
         //Display the virtual field on client side
-        toJSON: { virutals: true }, 
+        toJSON: { 
+            virutals: true,
+            getters: true 
+        }, 
         id: false
     }
 );
@@ -53,7 +56,7 @@ const thoughtSchema = new Schema(
         createdAt: {
             type: Date, 
             default: Date.now, 
-            get: timeCreated => moment(timeCreated).format('MMMM Do YYYY, h:mm a')
+            get: timeStamp => moment(timeStamp).format("MMMM Do YYYY, h:mm:ss a")
         },
 
         //Schema for username 
@@ -67,7 +70,10 @@ const thoughtSchema = new Schema(
     },
     {
         //Display the virtual field on client side
-        toJSON: { virtuals: true },
+        toJSON: { 
+            virtuals: true,
+            getters: true 
+        },
         id: false
     }
 );
