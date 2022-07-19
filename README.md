@@ -35,6 +35,14 @@ npm i express mongoose moment
 
 ## Visuals 
 
+This is a couple of routes that you will see when you open insonmia 
+
+Routes to GET all Users
+![GET routes for all users](./images/users.png)
+
+Router to GET all Thoughts
+![GET routes for all thoughts](./images/thoughts.png)
+
 ## Resources 
 
 - [GitHub Repo](https://github.com/VanessaLiaw021/social-networking-api)
