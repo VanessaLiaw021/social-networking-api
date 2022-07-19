@@ -39,9 +39,9 @@ npm i express mongoose moment
 
 - [GitHub Repo](https://github.com/VanessaLiaw021/social-networking-api)
 
-- [Demo GET all User and GET all Thoughts]()
+- [Demo GET all User and GET all Thoughts](https://drive.google.com/file/d/19dicnadsEo93bNGvrX0AzVlkwzy631dH/view)
 
-- [Demo GET a Single User and GET a Single Thought]()
+- [Demo GET a Single User and GET a Single Thought](https://drive.google.com/file/d/1u_95oV-337aQNq7L-FcogLa3uBJQN4zg/view)
 
 - [Demo POST, PUT, DELETE for User and POST, PUT, DELETE for Thought]()
 
