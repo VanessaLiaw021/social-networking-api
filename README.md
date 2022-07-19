@@ -43,9 +43,9 @@ npm i express mongoose moment
 
 - [Demo GET a Single User and GET a Single Thought](https://drive.google.com/file/d/1u_95oV-337aQNq7L-FcogLa3uBJQN4zg/view)
 
-- [Demo POST, PUT, DELETE for User and POST, PUT, DELETE for Thought]()
+- [Demo POST, PUT, DELETE for User and POST, PUT, DELETE for Thought](https://drive.google.com/file/d/1FDHkj3Tz4WZznQN-9RN-SNCD2MUblxV8/view)
 
-- [Demo POST, DELETE for User's friend and POST, DELETE for Reactions to Thought]()
+- [Demo POST, DELETE for User's friend and POST, DELETE for Reactions to Thought](https://drive.google.com/file/d/1uK4upDezWX59d9PhLQkkuk4p-AAZn9nd/view)
 
 ## Authors and Acknowledgement
 
